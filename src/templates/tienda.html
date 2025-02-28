@@ -1,0 +1,66 @@
+{% extends './base.html' %}
+
+{% block header %}
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{{ url_for('home') }}">Home</a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            </ul>
+            <div class="d-flex">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Dropdown
+                        </a>
+                        <ul class="dropdown-menu">
+                            {% if carrito %} 
+                           
+                            {% for producto in carrito %}
+                            <li><span>{{producto.1}}</span></li>
+                            <li><span>{{producto.0}}</span></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            {% endfor %}
+                            {% else %}
+                            <span>No hay productos en tu carrito</span>
+                            {% endif %}
+                        </ul>
+                    </li>
+                </ul>
+                <a href="{{ url_for('logout' ) }}"><button>Log out</button></a>
+            </div>
+        </div>
+    </div>
+</nav>
+    
+{% endblock %}
+
+{% block body %}
+
+<table>
+    <thead>
+        <th>
+            <tr>
+                <td>Nombre del producto</td>
+                <td>Precio</td>
+                <td>Añadir al carrito</td>
+                <td>Eliminar del Carrito</td>
+            </tr>
+        </th>
+    </thead>
+    {% for product in productos %}
+        <tbody>
+            <tr>
+                <td>{{product.1}}</td>
+                <td>{{product.2}}€</td>
+                <td><a href="/addProduct/{{product.0}}"><button>Añadir</button></a></td>
+                <td><a href="/deleteProduct/{{product.0}}"><button>Eliminar</button></a></td>
+            </tr>
+        </tbody>
+    {% endfor %}
+</table>
+
+{% endblock %}
